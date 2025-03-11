@@ -1,20 +1,14 @@
-let popupWindow = null;
+chrome.runtime.onInstalled.addListener(() => {
+  console.log("Extension installed and running.");
+});
 
-chrome.action.onClicked.addListener((tab) => {
-  if (popupWindow) {
-    chrome.windows.remove(popupWindow.id);
-    popupWindow = null;
-  } else {
-    chrome.windows.create(
-      {
-        url: "popup/popup.html",
-        type: "popup",
-        width: 400,
-        height: 500,
-      },
-      (window) => {
-        popupWindow = window;
+// Listen for watch.js triggering a reload
+chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+  if (message.action === "reload_styles") {
+    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+      if (tabs.length > 0) {
+        chrome.tabs.sendMessage(tabs[0].id, { action: "reload_styles" });
       }
-    );
+    });
   }
 });
