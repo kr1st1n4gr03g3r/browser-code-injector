@@ -1,51 +1,41 @@
 let styleElement;
-let scriptElement;
 
-chrome.storage.sync.get(["stylesEnabled"], (data) => {
+chrome.storage.sync.get(["stylesEnabled", "cssDirectory"], (data) => {
   if (data.stylesEnabled !== false) {
-    injectStyles();
-    injectScript();
+    injectStyles(data.cssDirectory);
   }
 });
 
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   if (message.action === "toggle_styles") {
     if (message.enabled) {
-      injectStyles();
+      chrome.storage.sync.get("cssDirectory", (data) => {
+        injectStyles(data.cssDirectory);
+      });
     } else {
       removeStyles();
     }
   }
 
-  if (message.action === "update_styles") {
-    updateStyles();
-  }
-
-  if (message.action === "update_scripts") {
-    updateScripts();
+  if (message.action === "update_css_directory") {
+    injectStyles(message.directory);
   }
 });
 
-function injectStyles() {
+function injectStyles(directory) {
+  if (!directory) return;
+
   if (!styleElement) {
     styleElement = document.createElement("style");
     document.head.appendChild(styleElement);
   }
-  fetch(chrome.runtime.getURL("styles/styles.css"))
+
+  fetch(`file://${directory}`)
     .then((response) => response.text())
     .then((css) => {
       styleElement.innerHTML = css;
-    });
-}
-
-function updateStyles() {
-  if (styleElement) {
-    fetch(chrome.runtime.getURL("styles/styles.css"))
-      .then((response) => response.text())
-      .then((css) => {
-        styleElement.innerHTML = css;
-      });
-  }
+    })
+    .catch((error) => console.error("Error loading CSS:", error));
 }
 
 function removeStyles() {
@@ -53,31 +43,4 @@ function removeStyles() {
     styleElement.remove();
     styleElement = null;
   }
-}
-
-function injectScript() {
-  if (!scriptElement) {
-    scriptElement = document.createElement("script");
-    scriptElement.src = chrome.runtime.getURL("scripts/script.js");
-    document.body.appendChild(scriptElement);
-  }
-}
-
-function updateScripts() {
-  if (scriptElement) {
-    scriptElement.remove();
-  }
-  injectScript();
-}
-
-chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
-  if (message.action === "inject_external_css") {
-    injectExternalCss(message.css);
-  }
-});
-
-function injectExternalCss(css) {
-  let externalStyle = document.createElement("style");
-  externalStyle.innerHTML = css;
-  document.head.appendChild(externalStyle);
 }
