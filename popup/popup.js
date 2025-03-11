@@ -5,6 +5,20 @@ document.addEventListener("DOMContentLoaded", () => {
   const resetDirectoryButton = document.getElementById("reset-directory");
   const runOnThisPageButton = document.getElementById("run-on-this-page");
   const reloadBtn = document.getElementById("reload-extension");
+  const closePopupBtn = document.getElementById("close-popup");
+
+  if (
+    !toggleStyles ||
+    !cssDirectoryInput ||
+    !saveDirectoryButton ||
+    !resetDirectoryButton ||
+    !runOnThisPageButton ||
+    !reloadBtn ||
+    !closePopupBtn
+  ) {
+    console.error("One or more elements are missing in popup.html.");
+    return;
+  }
 
   // Load saved settings
   chrome.storage.sync.get(
@@ -53,10 +67,9 @@ document.addEventListener("DOMContentLoaded", () => {
   reloadBtn.addEventListener("click", () => {
     chrome.runtime.reload();
   });
-});
 
-document.getElementById("close-popup").addEventListener("click", () => {
-  chrome.windows.getCurrent((window) => {
-    chrome.windows.remove(window.id);
+  // Close popup
+  closePopupBtn.addEventListener("click", () => {
+    chrome.runtime.sendMessage({ action: "close_popup" });
   });
 });
