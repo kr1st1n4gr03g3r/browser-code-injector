@@ -7,7 +7,10 @@
 </head>
 
 <body>
-    <h2>Browser Code Injector</h2>
+    <div class="popup-header">
+        <h2>Browser Code Injector</h2>
+        <button id="close-popup">✖</button>
+    </div>
 
     <label>
         <input type="checkbox" id="toggle-styles">
@@ -15,13 +18,13 @@
     </label>
 
     <div>
-        <label for="css-directory">Local CSS Directory:</label>
-        <input type="text" id="css-directory" placeholder="/Users/yourname/dev/styles.css">
+        <label for="css-directory">Local CSS File(s) (comma-separated):</label>
+        <input type="text" id="css-directory" placeholder="/path/to/style1.css, /path/to/style2.css">
         <button id="save-directory">Save</button>
         <button id="reset-directory">Reset</button>
     </div>
 
-
+    <button id="run-on-this-page">Run on This Page</button>
     <button id="reload-extension">Reload Extension</button>
 
     <script src="popup.js"></script>

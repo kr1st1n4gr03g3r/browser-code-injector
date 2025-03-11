@@ -1,29 +1,20 @@
-chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
-  if (message.action === "reload_extension") {
-    chrome.runtime.reload();
-  }
+let popupWindow = null;
 
-  if (message.action === "toggle_styles") {
-    chrome.storage.sync.set({ stylesEnabled: message.enabled });
-    chrome.tabs.query({}, (tabs) => {
-      tabs.forEach((tab) => {
-        chrome.tabs.sendMessage(tab.id, {
-          action: "toggle_styles",
-          enabled: message.enabled,
-        });
-      });
-    });
-  }
-
-  if (message.action === "update_css_directory") {
-    chrome.storage.sync.set({ cssDirectory: message.directory });
-    chrome.tabs.query({}, (tabs) => {
-      tabs.forEach((tab) => {
-        chrome.tabs.sendMessage(tab.id, {
-          action: "update_css_directory",
-          directory: message.directory,
-        });
-      });
-    });
+chrome.action.onClicked.addListener((tab) => {
+  if (popupWindow) {
+    chrome.windows.remove(popupWindow.id);
+    popupWindow = null;
+  } else {
+    chrome.windows.create(
+      {
+        url: "popup/popup.html",
+        type: "popup",
+        width: 400,
+        height: 500,
+      },
+      (window) => {
+        popupWindow = window;
+      }
+    );
   }
 });

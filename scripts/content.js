@@ -1,46 +1,57 @@
-let styleElement;
+let styleElements = [];
 
-chrome.storage.sync.get(["stylesEnabled", "cssDirectory"], (data) => {
-  if (data.stylesEnabled !== false) {
-    injectStyles(data.cssDirectory);
-  }
-});
-
-chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
-  if (message.action === "toggle_styles") {
-    if (message.enabled) {
-      chrome.storage.sync.get("cssDirectory", (data) => {
-        injectStyles(data.cssDirectory);
-      });
-    } else {
-      removeStyles();
+chrome.storage.sync.get(
+  ["stylesEnabled", "cssDirectories", "activeTabs"],
+  (data) => {
+    if (!data.stylesEnabled) return;
+    if (!data.activeTabs || !data.activeTabs.includes(chrome.runtime.id))
+      return;
+    if (data.cssDirectories) {
+      injectStyles(data.cssDirectories);
     }
   }
+);
 
-  if (message.action === "update_css_directory") {
-    injectStyles(message.directory);
+chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+  if (message.action === "update_styles") {
+    chrome.storage.sync.get("cssDirectories", (data) => {
+      if (data.cssDirectories) {
+        injectStyles(data.cssDirectories);
+      }
+    });
   }
 });
 
-function injectStyles(directory) {
-  if (!directory) return;
-
-  if (!styleElement) {
-    styleElement = document.createElement("style");
-    document.head.appendChild(styleElement);
-  }
-
-  fetch(`file://${directory}`)
-    .then((response) => response.text())
-    .then((css) => {
-      styleElement.innerHTML = css;
-    })
-    .catch((error) => console.error("Error loading CSS:", error));
+function injectStyles(directories) {
+  removeStyles();
+  directories.forEach((directory) => {
+    fetch(`file://${directory}`)
+      .then((response) => response.text())
+      .then((css) => {
+        let styleElement = document.createElement("style");
+        styleElement.innerHTML = css;
+        document.head.appendChild(styleElement);
+        styleElements.push(styleElement);
+        injectStylesIntoIframes(css);
+      })
+      .catch((error) => console.error("Error loading CSS:", error));
+  });
 }
 
 function removeStyles() {
-  if (styleElement) {
-    styleElement.remove();
-    styleElement = null;
-  }
+  styleElements.forEach((style) => style.remove());
+  styleElements = [];
+}
+
+function injectStylesIntoIframes(css) {
+  document.querySelectorAll("iframe").forEach((iframe) => {
+    try {
+      const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+      let styleElement = iframeDoc.createElement("style");
+      styleElement.innerHTML = css;
+      iframeDoc.head.appendChild(styleElement);
+    } catch (error) {
+      console.warn("Could not access iframe:", error);
+    }
+  });
 }
