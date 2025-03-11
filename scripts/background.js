@@ -15,7 +15,19 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     });
   }
 
-  if (message.action === "update_sites") {
-    chrome.storage.sync.set({ customSites: message.sites });
+  if (message.action === "update_styles") {
+    chrome.tabs.query({}, (tabs) => {
+      tabs.forEach((tab) => {
+        chrome.tabs.sendMessage(tab.id, { action: "update_styles" });
+      });
+    });
+  }
+
+  if (message.action === "update_scripts") {
+    chrome.tabs.query({}, (tabs) => {
+      tabs.forEach((tab) => {
+        chrome.tabs.sendMessage(tab.id, { action: "update_scripts" });
+      });
+    });
   }
 });
