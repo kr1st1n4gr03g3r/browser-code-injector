@@ -5,11 +5,27 @@
   "description": "💉 A Chrome (for now) plugin to inject CSS into environments and setups that don't allow for direct CSS or JS styling.",
   "permissions": ["activeTab"],
   "host_permissions": ["<all_urls>"],
+  "icons": {
+    "16": "icons/icon-16.png",
+    "48": "icons/icon-48.png",
+    "128": "icons/icon-128.png"
+  },
   "content_scripts": [
     {
       "matches": ["<all_urls>"],
-      "css": ["styles.css"],
-      "js": ["script.js"]
+      "css": ["styles/styles.css"],
+      "js": ["scripts/script.js"]
     }
-  ]
+  ],
+  "action": {
+    "default_popup": "popup/popup.html",
+    "default_icon": {
+      "16": "icons/icon-16.png",
+      "48": "icons/icon-48.png",
+      "128": "icons/icon-128.png"
+    }
+  },
+  "background": {
+    "service_worker": "scripts/background.js"
+  }
 }
