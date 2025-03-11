@@ -1,0 +1,15 @@
+{
+  "manifest_version": 1.0.0,
+  "name": "Browser Code Injector",
+  "version": "1.0",
+  "description": "💉 A Chrome (for now) plugin to inject CSS into environments and setups that don't allow for direct CSS or JS styling.",
+  "permissions": ["activeTab"],
+  "host_permissions": ["<all_urls>"],
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "css": ["styles.css"],
+      "js": ["script.js"]
+    }
+  ]
+}
