@@ -2,30 +2,31 @@
 <html lang="en">
 
 <head>
+    <meta charset="UTF-8" />
     <title>Browser Code Injector</title>
-    <link rel="stylesheet" href="popup.css">
+    <link rel="stylesheet" href="popup.css" />
 </head>
 
 <body>
-    <div class="popup-header">
-        <h2>Browser Code Injector</h2>
-        <button id="close-popup">✖</button>
-    </div>
+    <main>
+        <div class="popup-header">
+            <h2>&#x1F489; Browser Code Injector</h2>
+        </div>
 
-    <label>
-        <input type="checkbox" id="toggle-styles">
-        Enable Custom Styles
-    </label>
+        <div class="options">
+            <label for="css-directory">Local CSS File(s) (comma-separated):</label>
+            <br />
+            <input type="text" id="css-directory" placeholder="/path/to/style1.css, /path/to/style2.css" />
+            <br />
+            <span class="button-options">
+                <button id="save-directory">Save</button>
+                <button id="reset-directory">Reset</button>
+            </span>
+        </div>
 
-    <div>
-        <label for="css-directory">Local CSS File(s) (comma-separated):</label>
-        <input type="text" id="css-directory" placeholder="/path/to/style1.css, /path/to/style2.css">
-        <button id="save-directory">Save</button>
-        <button id="reset-directory">Reset</button>
-    </div>
-
-    <button id="run-on-this-page">Run on This Page</button>
-    <button id="reload-extension">Reload Extension</button>
+        <button id="run-on-this-page">Run on This Page</button>
+        <button id="reload-extension">Reload Extension</button>
+    </main>
 
     <script src="popup.js"></script>
 </body>
