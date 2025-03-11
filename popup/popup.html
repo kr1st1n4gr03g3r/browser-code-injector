@@ -1,12 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <title>Extension Popup</title>
+    <title>Browser Code Injector</title>
     <link rel="stylesheet" href="popup.css">
 </head>
+
 <body>
     <h2>Browser Code Injector</h2>
+
+    <label>
+        <input type="checkbox" id="toggle-styles">
+        Enable Custom Styles
+    </label>
+
+    <div>
+        <label for="site-list">Apply to these sites:</label>
+        <input type="text" id="site-list" placeholder="example.com, another.com">
+        <button id="save-sites">Save</button>
+    </div>
+
     <button id="reload-extension">Reload Extension</button>
+
     <script src="popup.js"></script>
 </body>
+
 </html>

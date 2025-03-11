@@ -1,20 +1,26 @@
 {
-  "manifest_version": 1.0.0,
+  "manifest_version": 3,
   "name": "Browser Code Injector",
-  "version": "1.0",
-  "description": "💉 A Chrome (for now) plugin to inject CSS into environments and setups that don't allow for direct CSS or JS styling.",
-  "permissions": ["activeTab"],
-  "host_permissions": ["<all_urls>"],
-  "icons": {
-    "16": "icons/icon-16.png",
-    "48": "icons/icon-48.png",
-    "128": "icons/icon-128.png"
+  "version": "1.0.0",
+  "description": "Injects custom CSS and JavaScript into selected websites and updates automatically.",
+  "permissions": [
+    "activeTab",
+    "storage"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "background": {
+    "service_worker": "scripts/background.js"
   },
   "content_scripts": [
     {
-      "matches": ["<all_urls>"],
-      "css": ["styles/styles.css"],
-      "js": ["scripts/script.js"]
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "scripts/content.js"
+      ]
     }
   ],
   "action": {
@@ -24,8 +30,5 @@
       "48": "icons/icon-48.png",
       "128": "icons/icon-128.png"
     }
-  },
-  "background": {
-    "service_worker": "scripts/background.js"
   }
 }
