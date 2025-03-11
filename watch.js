@@ -3,6 +3,7 @@ const path = require("path");
 const { exec } = require("child_process");
 
 const watchFolders = ["styles", "scripts"];
+const externalCssFile = process.argv[2]; // Get file from terminal argument
 
 watchFolders.forEach((folder) => {
   const folderPath = path.join(__dirname, folder);
@@ -13,19 +14,20 @@ watchFolders.forEach((folder) => {
       );
 
       if (filename.endsWith(".css")) {
-        exec("chrome-cli reload", () => {
-          sendMessageToTabs({ action: "update_styles" });
-        });
+        sendMessageToTabs({ action: "update_styles" });
       }
 
       if (filename.endsWith(".js")) {
-        exec("chrome-cli reload", () => {
-          sendMessageToTabs({ action: "update_scripts" });
-        });
+        sendMessageToTabs({ action: "update_scripts" });
       }
     }
   });
 });
+
+if (externalCssFile) {
+  console.log(`Injecting external CSS file: ${externalCssFile}`);
+  injectExternalCss(externalCssFile);
+}
 
 function sendMessageToTabs(message) {
   exec(`chrome-cli list tabs`, (err, stdout) => {
@@ -47,6 +49,17 @@ function sendMessageToTabs(message) {
         )});" -t ${tabId}`
       );
     });
+  });
+}
+
+function injectExternalCss(filePath) {
+  fs.readFile(filePath, "utf8", (err, css) => {
+    if (err) {
+      console.error("Error reading external CSS file:", err);
+      return;
+    }
+
+    sendMessageToTabs({ action: "inject_external_css", css });
   });
 }
 
