@@ -4,3 +4,6 @@ body {
 h1 {
   color: red !important;
 }
+
+p { color: chartreuse;
+}

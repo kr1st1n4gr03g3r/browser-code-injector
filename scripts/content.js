@@ -69,3 +69,15 @@ function updateScripts() {
   }
   injectScript();
 }
+
+chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+  if (message.action === "inject_external_css") {
+    injectExternalCss(message.css);
+  }
+});
+
+function injectExternalCss(css) {
+  let externalStyle = document.createElement("style");
+  externalStyle.innerHTML = css;
+  document.head.appendChild(externalStyle);
+}
