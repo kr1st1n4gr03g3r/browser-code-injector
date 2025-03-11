@@ -1,13 +1,8 @@
 let styleElement;
 let scriptElement;
 
-chrome.storage.sync.get(["stylesEnabled", "customSites"], (data) => {
-  const currentSite = window.location.hostname;
-
-  if (
-    data.stylesEnabled !== false &&
-    (!data.customSites || data.customSites.includes(currentSite))
-  ) {
+chrome.storage.sync.get(["stylesEnabled"], (data) => {
+  if (data.stylesEnabled !== false) {
     injectStyles();
     injectScript();
   }
@@ -15,12 +10,7 @@ chrome.storage.sync.get(["stylesEnabled", "customSites"], (data) => {
 
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   if (message.action === "toggle_styles") {
-    const currentSite = window.location.hostname;
-
-    if (
-      message.enabled &&
-      (!data.customSites || data.customSites.includes(currentSite))
-    ) {
+    if (message.enabled) {
       injectStyles();
     } else {
       removeStyles();
