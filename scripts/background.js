@@ -15,18 +15,14 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     });
   }
 
-  if (message.action === "update_styles") {
+  if (message.action === "update_css_directory") {
+    chrome.storage.sync.set({ cssDirectory: message.directory });
     chrome.tabs.query({}, (tabs) => {
       tabs.forEach((tab) => {
-        chrome.tabs.sendMessage(tab.id, { action: "update_styles" });
-      });
-    });
-  }
-
-  if (message.action === "update_scripts") {
-    chrome.tabs.query({}, (tabs) => {
-      tabs.forEach((tab) => {
-        chrome.tabs.sendMessage(tab.id, { action: "update_scripts" });
+        chrome.tabs.sendMessage(tab.id, {
+          action: "update_css_directory",
+          directory: message.directory,
+        });
       });
     });
   }
