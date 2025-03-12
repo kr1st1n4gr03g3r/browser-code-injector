@@ -609,20 +609,30 @@ body div.p:not(.watermark) {
   border-collapse: collapse;
   width: 100%;
   display: table;
-  background-color: white;
 }
 
 .technical-img-legend-row.row th.entry {
-  background-color: white;
   padding: 0px;
 }
+
+.technical-img-legend-tbody,
+th.technical-img-legend-info.entry,
+.technical-img-legend-thead .row,
+.technical-img-legend-row.row th.entry,
+.technical-img-legend-table,
+.technical-img-legend-table *,
+.technical-img-legend-tbody,
+.technical-img-legend-thead,
+.technical-img-legend-table.tgroup {
+  background-color: white;
+}
+
 
 .technical-img-legend-table.tgroup {
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
   align-content: space-around;
-  background-color: white;
 }
 
 .technical-img-legend-thead .row,
@@ -642,14 +652,9 @@ body div.p:not(.watermark) {
 
 .technical-img-legend-thead .entry {
   text-align: center;
-  padding: 20px 0 20px 0;
+  padding: 20px 0;
 }
 
-/* thead row "Figure No: Info" */
-.technical-img-legend-thead .row {
-  background-color: white;
-
-}
 
 th.technical-img-legend-title.entry {
   border-bottom: 2px solid rgb(202, 202, 202) !important;
@@ -663,7 +668,6 @@ th.technical-img-legend-title.entry {
 
 th.technical-img-legend-info.entry {
   text-align: left;
-  background-color: white !important;
   color: black;
   padding: 5px 0 5px 0;
 }
@@ -671,7 +675,6 @@ th.technical-img-legend-info.entry {
 /***** Table Body Styling *****/
 .technical-img-legend-tbody {
   border: 1px solid #ccc;
-  background-color: white;
 }
 
 tbody.technical-img-legend-tbody td.entry {
@@ -680,9 +683,11 @@ tbody.technical-img-legend-tbody td.entry {
 }
 
 .technical-img-legend-tbody .entry {
-  padding: 12px;
-  font-size: 14px;
-  font-weight: bold;
+  padding: 10px;
+  font-size: 12px;
+  font-weight: 300;
 }
+
+
 
 /*****  End technical-img-legend Styling *****/
