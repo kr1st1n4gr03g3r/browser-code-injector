@@ -8,7 +8,7 @@ const cssFilePath = path.join(__dirname, "styles", "style.css");
 fs.watchFile(cssFilePath, { interval: 500 }, (curr, prev) => {
   console.log(`Detected change in ${cssFilePath}. Reloading styles...`);
 
-  // Send a message to the Chrome extension
+  // Send message to Chrome extension
   exec(
     `osascript -e 'tell application "Google Chrome" to reload active tab'`,
     (error, stdout, stderr) => {
@@ -20,3 +20,5 @@ fs.watchFile(cssFilePath, { interval: 500 }, (curr, prev) => {
     }
   );
 });
+
+console.log("Watching for CSS changes...");
