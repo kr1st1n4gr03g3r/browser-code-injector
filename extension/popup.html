@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>AEM Style Injector</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 10px;
+            width: 250px;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+        }
+
+        input {
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        #status {
+            margin-top: 10px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <h2>AEM Style Injector</h2>
+    <input type="text" id="folderPath" placeholder="Enter folder path..." />
+    <button id="startServer">Start Server</button>
+    <button id="stopServer" disabled>Stop Server</button>
+    <div id="status">Server is OFF</div>
+    <script src="popup.js"></script>
+</body>
+
+</html>

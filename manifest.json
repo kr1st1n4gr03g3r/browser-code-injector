@@ -5,13 +5,18 @@
   "description": "Injects custom CSS and JavaScript into selected websites and updates automatically.",
   "permissions": [
     "activeTab",
-    "storage"
+    "storage",
+    "scripting"
   ],
   "host_permissions": [
     "<all_urls>"
   ],
   "background": {
-    "service_worker": "scripts/background.js"
+    "service_worker": "extension/background.js"
+  },
+  "action": {
+    "default_popup": "extension/popup.html",
+    "default_icon": "extension/icon.png"
   },
   "content_scripts": [
     {
@@ -19,16 +24,20 @@
         "<all_urls>"
       ],
       "js": [
-        "scripts/content.js"
-      ]
+        "extension/content.js"
+      ],
+      "run_at": "document_end"
     }
   ],
-  "action": {
-    "default_popup": "popup/popup.html",
-    "default_icon": {
-      "16": "icons/icon-16.png",
-      "48": "icons/icon-48.png",
-      "128": "icons/icon-128.png"
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "server/watched_folder/injected.js",
+        "server/watched_folder/styles.css"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
     }
-  }
+  ]
 }
