@@ -24,6 +24,7 @@ You'll need **Node.js** and **npm**.
 If you don’t already have **Node.js** installed, install it via Homebrew:
 
 ```sh
+npm install
 brew install node
 ```  
 Verify installation:  
