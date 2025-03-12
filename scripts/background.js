@@ -1,23 +1,14 @@
 chrome.runtime.onInstalled.addListener(() => {
-  console.log("Extension installed and running.");
+  console.log("Browser Code Injector Installed.");
 });
 
-// Listen for messages from watch.js or popup.js
+chrome.runtime.onConnect.addListener((port) => {
+  console.log("Connected to DevTools:", port.name);
+});
+
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   if (message.action === "reload_styles") {
-    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-      if (tabs.length > 0) {
-        chrome.tabs.sendMessage(tabs[0].id, { action: "reload_styles" });
-      }
-    });
-  }
-});
-
-// Close popup when clicking the "X" button
-chrome.runtime.onMessage.addListener((message) => {
-  if (message.action === "close_popup") {
-    chrome.windows.getCurrent((window) => {
-      chrome.windows.remove(window.id);
-    });
+    console.log("Received request to reload styles.");
+    sendResponse({ status: "Styles reloaded" });
   }
 });
