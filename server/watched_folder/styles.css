@@ -650,6 +650,20 @@ th.technical-img-legend-info.entry,
   border: 1px solid #ddd;
 }
 
+
+.technical-img-legend-tbody-3col .entry {
+  width: 33%;
+}
+
+.technical-img-legend-thead .entry,
+.technical-img-legend-tbody .entry {
+  display: table-cell;
+  width: 50%;
+  margin: 0px;
+  text-align: left;
+  border: 1px solid #ddd;
+}
+
 /* .technical-img-legend-thead .entry {
   text-align: center;
   padding: 20px 0;
