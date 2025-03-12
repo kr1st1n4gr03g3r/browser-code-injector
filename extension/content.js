@@ -45,6 +45,6 @@ function injectStylesAndScripts(cssUrl, jsUrl) {
 setInterval(() => {
   injectStylesAndScripts(
     "http://localhost:3000/styles.css",
-    "http://localhost:3000/script.js"
+    "http://localhost:3000/injected.js"
   );
 }, 1000);
