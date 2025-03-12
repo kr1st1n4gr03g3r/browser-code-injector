@@ -8,6 +8,10 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
       sheet.href = url.toString();
     });
 
+    document.querySelectorAll("style").forEach((style) => {
+      style.innerHTML = style.innerHTML; // Force inline styles to refresh
+    });
+
     sendResponse({ status: "CSS Reloaded" });
   }
 });

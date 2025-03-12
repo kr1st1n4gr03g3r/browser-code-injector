@@ -1,21 +1,24 @@
+
 # Browser Code Injector 💉
 
-A Chrome extension that **injects custom CSS and JavaScript** into all open tabs **dynamically**, without needing to reload the extension.
+A Chrome extension that **injects custom CSS and JavaScript** into selected websites **dynamically**, without needing to reload the extension.
+
+Repository: [GitHub](https://github.com/kr1st1n4gr03g3r/browser-code-injector)
 
 ---
 
 ## **✨ Features**  
-✅ Apply **custom styles** across all tabs  
-✅ Automatically update styles when you modify CSS files  
-✅ Inject **external CSS files** from the terminal  
-✅ No need to reload the extension  
+✅ Apply **custom styles and scripts** dynamically  
+✅ Automatically update styles when CSS or JS files change  
+✅ Works inside iframes for better content injection  
+✅ No need to reload the extension or refresh tabs  
 
 ---
 
-## **🚀 1️⃣ Installation (Mac/Linux)**  
+## **🚀 1️⃣ Installation**  
 
 ### **📌 1.1 Install Dependencies**  
-You'll need `node.js`, `npm`, and `chrome-cli`.
+You'll need **Node.js** and **npm**.
 
 #### **📌 1.1.1 Install Node.js & npm**  
 If you don’t already have **Node.js** installed, install it via Homebrew:
@@ -29,94 +32,109 @@ node -v
 npm -v
 ```  
 
-#### **📌 1.1.2 Install `chrome-cli`**  
-This allows communication with Chrome from the command line:
-
-```sh
-brew install chrome-cli
-```  
-Verify installation:  
-```sh
-chrome-cli list tabs
-```  
-
 ---
 
-## **🔧 2️⃣ Setting Up the Extension**  
+## **🛠️ 2️⃣ Setting Up the Extension**  
 
 ### **📌 2.1 Clone the repository**  
+
 ```sh
-git clone https://github.com/YOUR-USERNAME/browser-code-injector.git
+git clone https://github.com/kr1st1n4gr03g3r/browser-code-injector.git
 cd browser-code-injector
 ```  
 
 ### **📌 2.2 Load the extension in Chrome**  
 1. Open Chrome and go to `chrome://extensions/`  
 2. **Enable Developer Mode** (top right corner)  
-3. Click **"Load Unpacked"** and select the `browser-code-injector/` folder.  
+3. Click **"Load Unpacked"** and select the `extension/` folder.  
 
 ---
 
-## **🎨 3️⃣ Auto-Injecting Custom CSS**  
+## **🎨 3️⃣ Auto-Injecting Custom CSS & JavaScript**  
 
-### **📌 3.1 Watch for CSS Changes & Apply Instantly**  
-Start watching CSS/JS file changes so updates apply without reloading:
+### **📌 3.1 Start the Server for Live Updates**  
+This watches for file changes and injects CSS/JS dynamically:
 
 ```sh
-node watch.js
+cd server
+npm install
+npm start
 ```  
 
 ---
 
-## **📂 4️⃣ Injecting an External CSS File**  
+## **📚 4️⃣ Injecting External CSS & JS**  
 
-To inject a separate CSS file (e.g., `custom.css`):
+Modify the files in `watched_folder/`, and they will be automatically applied.  
 
+1. Edit `watched_folder/styles.css` (for CSS updates)  
+2. Edit `watched_folder/script.js` (for JavaScript updates)  
+
+---
+
+## **🔧 5️⃣ Usage**  
+
+- Open Chrome DevTools (`F12 > Console`) to see logs.  
+- Modify CSS/JS files in `watched_folder/` and see changes instantly.  
+- Click the **Browser Code Injector** extension icon in Chrome to toggle styling.  
+- **How to open a website and apply changes**:  
+  - Open any website in Chrome.  
+  - Make sure the extension is loaded and running.  
+  - Modify the files in `watched_folder/` to see updates applied dynamically.
+  
+---
+
+## **🔧 6️⃣ Isolating Specific Code Blocks in DevTools**  
+
+To isolate specific elements and modify them:
+
+1. **Open Chrome DevTools** (`F12` or `Cmd+Option+I` on Mac, `F12` or `Ctrl+Shift+I` on Windows/Linux).
+2. Go to the **Elements** tab and hover over different elements in the DOM.
+3. Right-click an element and select **Inspect**.
+4. Use the **Styles** panel to preview CSS changes live before applying them permanently.
+5. Identify the correct `iframe` if the content is inside an embedded frame:
+   - Open **DevTools Console** (`F12 > Console`).
+   - Run: 
 ```sh
-node watch.js path/to/custom.css
-```  
-
-This will dynamically inject the styles into **all open browser tabs**.
-
----
-
-## **🔥 5️⃣ Usage**  
-
-- Click the **Browser Code Injector** extension icon in Chrome.  
-- **Toggle "Enable Custom Styles"** to enable/disable styling.  
-- **Modify CSS/JS files** in the `styles/` or `scripts/` folder, and see changes instantly!  
-- **Inject custom CSS via terminal**:  
-  ```sh
-  node watch.js myfile.css
-  ```  
+document.querySelectorAll("iframe")
+```
+   - Find the correct iframe and modify its content dynamically using the extension.
 
 ---
 
-## **🛠 6️⃣ Debugging**  
+## **🛠️ 7️⃣ Debugging**  
 
 If something isn’t working:  
-- **Check logs** in the terminal (`watch.js` will print detected changes).  
+- **Check logs** in the terminal (`server.js` will print detected changes).  
 - **Open Chrome DevTools (`F12 > Console`)** and look for errors.  
-- **Run `chrome-cli list tabs`** to ensure `chrome-cli` is installed correctly.  
+- **Ensure Node.js is running (`npm start`)** to watch for changes.  
 
 ---
 
-## **📜 7️⃣ License**  
+## **📚 8️⃣ License**  
 
 This project is open-source under the **MIT License**.
 
 ---
 
-## **✨ 8️⃣ Future Improvements**  
+## **✨ 9️⃣ Future Improvements**  
 
-- **Support for injecting JavaScript** from the terminal  
-- **Auto-refreshing tabs** when external CSS updates  
-- **Improved UI** for managing injected styles  
+- **Support injecting JavaScript via terminal**  
+- **Auto-refreshing tabs when external files update**  
+- **Improved UI for managing injected styles**  
+
+---
+
+## **💡 1️⃣0️⃣ Contributing**  
+
+Pull requests are welcome! Open an issue if you have **feature requests** or **bugs**.  
 
 ---
 
-## **💡 9️⃣ Contributing**  
 
-Pull requests are welcome! Open an issue if you have **feature requests** or **bugs**.
+***Further notes:***
+This extension was made for people who struggle in AEM to get the preview in author to reflect changes in CSS folders. The authors that are styling CSS within the authoring environment cannot see the changes properly without publishing the content every single time. Specifcally when using AEM Guides, you would have to find your .dita or snippet file within the dam. Here's an example:
 
----
+1. Go to the asset in the authoring environment at `content/dam/project-name/.../file.dita`
+2. Inspect as usual using the dev console, and style as needed by copying the CSS from your AEM directory 
+

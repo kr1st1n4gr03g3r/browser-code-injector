@@ -1,0 +1,17 @@
+{
+  "name": "browser-code-injector",
+  "version": "1.0.0",
+  "description": "A Chrome extension that **injects custom CSS and JavaScript** into all open tabs **dynamically**, without needing to reload the extension.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "chokidar": "^4.0.3",
+    "cors": "^2.8.5",
+    "express": "^4.21.2"
+  }
+}
